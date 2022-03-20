@@ -37,6 +37,7 @@ import {
   Container,
   ThemeProvider,
   Row,
+  Badge,
 } from "react-bootstrap";
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -58,14 +59,11 @@ function App() {
       >
         <BrowserRouter>
           <Row>
-            <Navbar bg="light" className="Navigator" expand="lg" collapseOnSelect fluid>
+            <Navbar bg="light"  expand="lg" collapseOnSelect fluid>
               <Container className="Navigator">
-
-                <Navbar.Brand href="#home">
+                <Navbar.Brand href="/">
                   {" "}
-                  <Nav.Link href="/">
-                    DGLINKS GEOSPATIAL
-                  </Nav.Link>
+                    DGLINKS 
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -82,7 +80,7 @@ function App() {
                       {" "}
                       Cart
                       {cartItems.length > 0 && (
-                        <span className="badge">{cartItems.length}</span>
+                        <Badge bg="danger">{cartItems.length}</Badge>
                       )}
                     </Nav.Link>
                     {userInfo ? (

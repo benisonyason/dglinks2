@@ -1,9 +1,14 @@
 body{
   box-sizing: border-box;
-  background-color: wheat;
+  background-color: rgba(245, 242, 237, 0.637);
 }
 
 .Navigator{
-  padding: auto;
-  background-color: blueviolet;
+  background-color: rgb(212, 203, 219);
+}
+
+.carousel-caption{
+  text-shadow: 2px 2px 5px white;  color: red;
+  font-size: large;
+  font-weight: 200;
 }
