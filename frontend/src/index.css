@@ -1,0 +1,9 @@
+body{
+  box-sizing: border-box;
+  background-color: wheat;
+}
+
+.Navigator{
+  padding: auto;
+  background-color: blueviolet;
+}
