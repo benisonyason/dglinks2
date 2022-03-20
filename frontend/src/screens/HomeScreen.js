@@ -46,7 +46,7 @@ export default function HomeScreen() {
           </Container>
           <Container>
             <hr class="green" />
-            <h2>Products</h2>
+            <h2>Data Plans</h2>
             {loading ? (
               <LoadingBox></LoadingBox>
             ) : error ? (

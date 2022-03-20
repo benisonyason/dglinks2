@@ -5,9 +5,7 @@ import { listProducts } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Product from '../components/Product';
-import Rating from '../components/Rating';
-import { prices, ratings } from '../utils';
-import { Form, Col, Row, Button, Container} from 'react-bootstrap';
+import { Form, Col, Row, Button, Container, ListGroup} from 'react-bootstrap';
 
 export default function SearchScreen(props) {
   const navigate = useNavigate();
@@ -81,75 +79,43 @@ export default function SearchScreen(props) {
       </Row>
       <Row className="row top">
         <Col className="col-1">
-          <h3>Department</h3>
+          <h3>categories</h3>
           <Row>
             {loadingCategories ? (
               <LoadingBox></LoadingBox>
             ) : errorCategories ? (
               <MessageBox variant="danger">{errorCategories}</MessageBox>
             ) : (
-              <ul>
-                <li>
+              <ListGroup>
+                <ListGroup as="ul">
                   <Link
                     className={'all' === category ? 'active' : ''}
                     to={getFilterUrl({ category: 'all' })}
                   >
-                    Any
+                    All
                   </Link>
-                </li>
+                </ListGroup>
                 {categories.map((c) => (
-                  <li key={c}>
+                  <ListGroup key={c} horizontal>
                     <Link
                       className={c === category ? 'active' : ''}
                       to={getFilterUrl({ category: c })}
                     >
                       {c}
                     </Link>
-                  </li>
+                  </ListGroup>
                 ))}
-              </ul>
+              </ListGroup>
             )}
           </Row>
-          <Row>
-            <h3>Price</h3>
-            <ul>
-              {prices.map((p) => (
-                <li key={p.name}>
-                  <Link
-                    to={getFilterUrl({ min: p.min, max: p.max })}
-                    className={
-                      `${p.min}-${p.max}` === `${min}-${max}` ? 'active' : ''
-                    }
-                  >
-                    {p.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Row>
-          <Row>
-            <h3>Avg. Customer Review</h3>
-            <ul>
-              {ratings.map((r) => (
-                <li key={r.name}>
-                  <Link
-                    to={getFilterUrl({ rating: r.rating })}
-                    className={`${r.rating}` === `${rating}` ? 'active' : ''}
-                  >
-                    <Rating caption={' & up'} rating={r.rating}></Rating>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Row>
         </Col>
-        <div className="col-3">
+        <Col>
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
             <MessageBox variant="danger">{error}</MessageBox>
           ) : (
-            <>
+            <Container>
               {products.length === 0 && (
                 <MessageBox>No Product Found</MessageBox>
               )}
@@ -169,9 +135,9 @@ export default function SearchScreen(props) {
                   </Link>
                 ))}
               </div>
-            </>
+            </Container>
           )}
-        </div>
+        </Col>
       </Row>
     </Container>
   );
