@@ -30,7 +30,7 @@ export default function SigninScreen(props) {
   }, [navigate, redirect, userInfo]);
   return (
     <div>
-      <Form className="form" onSubmit={submitHandler}>
+      <Form onSubmit={submitHandler}>
   
         <div>
           <h1>Sign In</h1>
@@ -38,7 +38,7 @@ export default function SigninScreen(props) {
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
         <Col>
-        <Form.Group controlId="formGridEmail">
+        <Form.Group className="mb-3" controlId="formGridEmail">
           <Form.Label htmlFor="email">Email address</Form.Label>
           <Form.Control
             type="email"

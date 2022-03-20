@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { register } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { Form, Col,Button } from 'react-bootstrap';
+import { Form, Col, Row, Button, Container } from 'react-bootstrap';
 
 export default function RegisterScreen(props) {
   const navigate = useNavigate();
@@ -35,76 +35,80 @@ export default function RegisterScreen(props) {
     }
   }, [navigate, redirect, userInfo]);
   return (
-    <div>
-      <Form.Group className="form" onSubmit={submitHandler}>
-        <div>
-          <h1>Create Account</h1>
-        </div>
+    <Container>
+      <Form onSubmit={submitHandler}>
         <Col>
-
-        {loading && <LoadingBox></LoadingBox>}
-        {error && <MessageBox variant="danger">{error}</MessageBox>}
-        <div>
-          <Form.Label htmlFor="name">Name</Form.Label>
-          <Form.Control
-            type="text"
-            id="name"
-            placeholder="Enter name"
-            required
-            onChange={(e) => setName(e.target.value)}
-          ></Form.Control>
-        </div>
-        </Col>
-        <Col>
-        <Form.Group>
-          <Form.Label htmlFor="email">Email address</Form.Label>
-          <Form.Control
-            type="email"
-            id="email"
-            placeholder="Enter email"
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        </Col>
-        <Col>
-        <Form.Group>
-          <Form.Label htmlFor="password">Password</Form.Label>
-          <Form.Control
-            type="password"
-            id="password"
-            placeholder="Enter password"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        </Col>
-        <Col>
-        <Form.Group>
-          <Form.Label htmlFor="confirmPassword">Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            id="confirmPassword"
-            placeholder="Enter confirm password"
-            required
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        </Col>
-        <Col>
-        <div>
-          <Button variant="primary" type="submit">
-            Register
-          </Button>
-        </div>
-        <div>
           <div>
-            Already have an account?{' '}
-            <Link to={`/signin?redirect=${redirect}`}>Log-In</Link>
+            <h1>Create Account</h1>
           </div>
-        </div>
+          <Col>
+
+            {loading && <LoadingBox></LoadingBox>}
+            {error && <MessageBox variant="danger">{error}</MessageBox>}
+            <div>
+              <Form.Label htmlFor="name">Name</Form.Label>
+              <Form.Control
+                type="text"
+                id="name"
+                placeholder="Enter name"
+                required
+                onChange={(e) => setName(e.target.value)}
+              ></Form.Control>
+            </div>
+          </Col>
+          <Col>
+            <Form.Group>
+              <Form.Label htmlFor="email">Email address</Form.Label>
+              <Form.Control
+                type="email"
+                id="email"
+                placeholder="Enter email"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group>
+              <Form.Label htmlFor="password">Password</Form.Label>
+              <Form.Control
+                isValid="true"
+                type="password"
+                id="password"
+                placeholder="Enter password"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group>
+              <Form.Label htmlFor="confirmPassword">Confirm Password</Form.Label>
+              <Form.Control
+                isValid="true"
+                type="password"
+                id="confirmPassword"
+                placeholder="Enter confirm password"
+                required
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Row>
+            <div>
+              <Button variant="primary" type="submit">
+                Register
+              </Button>
+            </div>
+            <div>
+              <div>
+                Already have an account?{' '}
+                <Link to={`/signin?redirect=${redirect}`}>Log-In</Link>
+              </div>
+            </div>
+          </Row>
         </Col>
-      </Form.Group>
-    </div>
+      </Form>
+    </Container>
   );
 }

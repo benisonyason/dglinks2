@@ -6,6 +6,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Rating from '../components/Rating';
 import { PRODUCT_REVIEW_CREATE_RESET } from '../constants/productConstants';
+import { Container, Col, Row, ListGroup, Button, Form } from 'react-bootstrap';
 
 export default function ProductScreen(props) {
   const navigate = useNavigate();
@@ -53,63 +54,63 @@ export default function ProductScreen(props) {
     }
   };
   return (
-    <div>
+    <Container>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <div>
+        <Col>
           <Link to="/">Back to result</Link>
-          <div className="row top">
-            <div className="col-2">
+          <Row>
+            <Row >
               <img
                 className="large"
                 src={product.image}
                 alt={product.name}
               ></img>
-            </div>
-            <div className="col-1">
-              <ul>
-                <li>
+            </Row>
+            <Row>
+              <ListGroup>
+                <ListGroup.Item>
                   <h1>{product.name}</h1>
-                </li>
-                <li>
+                </ListGroup.Item>
+                <ListGroup.Item>
                   <Rating
                     rating={product.rating}
                     numReviews={product.numReviews}
                   ></Rating>
-                </li>
-                <li>Price : N{product.price}</li>
-                <li>
+                </ListGroup.Item>
+                <ListGroup.Item>Price : N{product.price}</ListGroup.Item>
+                <ListGroup.Item>
                   Description:
                   <p>{product.description}</p>
-                </li>
-              </ul>
-            </div>
-            <div className="col-1">
-              <div className="card card-body">
-                <ul>
-                  <li>
+                </ListGroup.Item>
+              </ListGroup>
+            </Row>
+            <Row>
+              <div >
+                <ListGroup>
+                  <ListGroup>
                     {' '}
-                    <h2>
+                    <h4>
                       <Link to={`/seller/${product.seller._id}`}>
                         {product.seller.seller.name}
                       </Link>
-                    </h2>
+                    </h4>
                     <Rating
                       rating={product.seller.seller.rating}
                       numReviews={product.seller.seller.numReviews}
                     ></Rating>
-                  </li>
-                  <li>
-                    <div className="row">
+                  </ListGroup>
+                  <ListGroup>
+                    <div>
                       <div>Price</div>
-                      <div className="price">N{product.price}</div>
+                      <div className="price">N {product.price}</div>
                     </div>
-                  </li>
-                  <li>
-                    <div className="row">
+                  </ListGroup>
+                  <ListGroup>
+                    <div>
                       <div>Status</div>
                       <div>
                         {product.countInStock > 0 ? (
@@ -119,14 +120,14 @@ export default function ProductScreen(props) {
                         )}
                       </div>
                     </div>
-                  </li>
+                  </ListGroup>
                   {product.countInStock > 0 && (
                     <>
-                      <li>
+                      <ListGroup>
                         <div className="row">
                           <div>Qty</div>
                           <div>
-                            <select
+                            <Form.Select
                               value={qty}
                               onChange={(e) => setQty(e.target.value)}
                             >
@@ -137,47 +138,47 @@ export default function ProductScreen(props) {
                                   </option>
                                 )
                               )}
-                            </select>
+                            </Form.Select>
                           </div>
                         </div>
-                      </li>
-                      <li>
-                        <button
+                      </ListGroup>
+                      <ListGroup>
+                        <Button
                           onClick={addToCartHandler}
                           className="primary block"
                         >
                           Add to Cart
-                        </button>
-                      </li>
+                        </Button>
+                      </ListGroup>
                     </>
                   )}
-                </ul>
+                </ListGroup>
               </div>
-            </div>
-          </div>
-          <div>
+            </Row>
+          </Row>
+          <Row>
             <h2 id="reviews">Reviews</h2>
             {product.reviews.length === 0 && (
               <MessageBox>There is no review</MessageBox>
             )}
-            <ul>
+            <ListGroup>
               {product.reviews.map((review) => (
-                <li key={review._id}>
+                <ListGroup.Item key={review._id}>
                   <strong>{review.name}</strong>
                   <Rating rating={review.rating} caption=" "></Rating>
                   <p>{review.createdAt.substring(0, 10)}</p>
                   <p>{review.comment}</p>
-                </li>
+                </ListGroup.Item>
               ))}
-              <li>
+              <ListGroup.Item>
                 {userInfo ? (
-                  <form className="form" onSubmit={submitHandler}>
+                  <Form className="form" onSubmit={submitHandler}>
                     <div>
                       <h2>Write a customer review</h2>
                     </div>
                     <div>
-                      <label htmlFor="rating">Rating</label>
-                      <select
+                      <Form.Label htmlFor="rating">Rating</Form.Label>
+                      <Form.Select
                         id="rating"
                         value={rating}
                         onChange={(e) => setRating(e.target.value)}
@@ -188,21 +189,21 @@ export default function ProductScreen(props) {
                         <option value="3">3- Good</option>
                         <option value="4">4- Very good</option>
                         <option value="5">5- Excelent</option>
-                      </select>
+                      </Form.Select>
                     </div>
                     <div>
-                      <label htmlFor="comment">Comment</label>
-                      <textarea
+                      <Form.Label htmlFor="comment">Comment</Form.Label>
+                      <Form.Control as="textarea"
                         id="comment"
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
-                      ></textarea>
+                      ></Form.Control>
                     </div>
                     <div>
                       <label />
-                      <button className="primary" type="submit">
+                      <Button className="primary" type="submit">
                         Submit
-                      </button>
+                      </Button>
                     </div>
                     <div>
                       {loadingReviewCreate && <LoadingBox></LoadingBox>}
@@ -212,17 +213,17 @@ export default function ProductScreen(props) {
                         </MessageBox>
                       )}
                     </div>
-                  </form>
+                  </Form>
                 ) : (
                   <MessageBox>
                     Please <Link to="/signin">Sign In</Link> to write a review
                   </MessageBox>
                 )}
-              </li>
-            </ul>
-          </div>
-        </div>
+              </ListGroup.Item>
+            </ListGroup>
+          </Row>
+        </Col>
       )}
-    </div>
+    </Container>
   );
 }

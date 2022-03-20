@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
+import ListGroupItem from '../../node_modules/react-bootstrap/esm/ListGroupItem';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import MessageBox from '../components/MessageBox';
+import { Col, Row, Form, ListGroup, Button } from 'react-bootstrap'
 
 export default function CartScreen(props) {
   const navigate = useNavigate();
@@ -31,8 +33,8 @@ export default function CartScreen(props) {
     navigate('/signin?redirect=/shipping');
   };
   return (
-    <div className="row top">
-      <div className="col-2">
+    <Col >
+      <Row>
         <h1>Shopping Cart</h1>
         {error && <MessageBox variant="danger">{error}</MessageBox>}
         {cartItems.length === 0 ? (
@@ -40,22 +42,24 @@ export default function CartScreen(props) {
             Cart is empty. <Link to="/">Go Shopping</Link>
           </MessageBox>
         ) : (
-          <ul>
+          <Col>
             {cartItems.map((item) => (
-              <li key={item.product}>
+              <Col key={item.product}>
                 <div className="row">
-                  <div>
+                  <Col>
                     <img
+                    style={{ width: '5rem'}}
                       src={item.image}
                       alt={item.name}
                       className="small"
                     ></img>
-                  </div>
-                  <div className="min-30">
+                  </Col>
+                  <Col >
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
-                  </div>
-                  <div>
-                    <select
+                  </Col>
+                  <Col>
+                    <Form.Select
+                    style={{ width: '10rem'}}
                       value={item.qty}
                       onChange={(e) =>
                         dispatch(
@@ -68,45 +72,46 @@ export default function CartScreen(props) {
                           {x + 1}
                         </option>
                       ))}
-                    </select>
-                  </div>
-                  <div>N{item.price}</div>
-                  <div>
-                    <button
+                    </Form.Select>
+                    <div>N{item.price}</div>
+                  </Col>
+                  
+                  <Col>
+                    <Button
                       type="button"
                       onClick={() => removeFromCartHandler(item.product)}
                     >
                       Delete
-                    </button>
-                  </div>
+                    </Button>
+                  </Col>
                 </div>
-              </li>
+              </Col>
             ))}
-          </ul>
+          </Col>
         )}
-      </div>
-      <div className="col-1">
-        <div className="card card-body">
-          <ul>
-            <li>
+      </Row>
+      <Row >
+        <div>
+          <ListGroup>
+            <ListGroupItem>
               <h2>
                 Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) : N
                 {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
               </h2>
-            </li>
-            <li>
-              <button
+            </ListGroupItem>
+            <ListGroup.Item>
+              <Button
                 type="button"
                 onClick={checkoutHandler}
                 className="primary block"
                 disabled={cartItems.length === 0}
               >
                 Proceed to Checkout
-              </button>
-            </li>
-          </ul>
+              </Button>
+            </ListGroup.Item>
+          </ListGroup>
         </div>
-      </div>
-    </div>
+      </Row>
+    </Col>
   );
 }
