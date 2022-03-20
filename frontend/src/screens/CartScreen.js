@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import ListGroupItem from '../../node_modules/react-bootstrap/esm/ListGroupItem';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import MessageBox from '../components/MessageBox';
-import { Col, Row, Form, ListGroup, Button } from 'react-bootstrap'
+import { Col, Row, Form, ListGroup, Button, Card } from 'react-bootstrap'
 
 export default function CartScreen(props) {
   const navigate = useNavigate();
@@ -33,25 +33,24 @@ export default function CartScreen(props) {
     navigate('/signin?redirect=/shipping');
   };
   return (
-    <Col >
-      <Row>
-        <h1>Shopping Cart</h1>
-        {error && <MessageBox variant="danger">{error}</MessageBox>}
-        {cartItems.length === 0 ? (
-          <MessageBox>
-            Cart is empty. <Link to="/">Go to our product</Link>
-          </MessageBox>
-        ) : (
-          <Col>
-            {cartItems.map((item) => (
-              <Col key={item.product}>
-                <div className="row">
+    <Row >
+      <h1> Cart</h1>
+      {error && <MessageBox variant="danger">{error}</MessageBox>}
+      {cartItems.length === 0 ? (
+        <MessageBox>
+          Cart is empty. <Link to="/">Go to our product</Link>
+        </MessageBox>
+      ) : (
+        <Col sm={8}>
+          {cartItems.map((item) => (
+            <Col key={item.product}>
+              <Card >
+                <Row>
                   <Col>
                     <img
-                    style={{ width: '5rem'}}
+                      style={{ maxWidth: '50px' }}
                       src={item.image}
                       alt={item.name}
-                      className="small"
                     ></img>
                   </Col>
                   <Col >
@@ -59,7 +58,7 @@ export default function CartScreen(props) {
                   </Col>
                   <Col>
                     <Form.Select
-                    style={{ width: '10rem'}}
+                      style={{ width: '4rem' }}
                       value={item.qty}
                       onChange={(e) =>
                         dispatch(
@@ -73,45 +72,47 @@ export default function CartScreen(props) {
                         </option>
                       ))}
                     </Form.Select>
-                    <div>N{item.price}</div>
+                    <h7>N{item.price}</h7>
                   </Col>
-                  
                   <Col>
                     <Button
-                      type="button"
+                      size="sm"
+                      variant="primary"
+                      type="submit"
                       onClick={() => removeFromCartHandler(item.product)}
                     >
                       Delete
                     </Button>
                   </Col>
-                </div>
-              </Col>
-            ))}
-          </Col>
-        )}
-      </Row>
-      <Row >
-        <div>
+                </Row>
+              </Card>
+            </Col>
+          ))}
+        </Col>
+      )}
+      <Col sm={4}>
+        <Card>
           <ListGroup>
             <ListGroupItem>
-              <h2>
+              <h6>
                 Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) : N
                 {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
-              </h2>
+              </h6>
             </ListGroupItem>
             <ListGroup.Item>
               <Button
+                size="sm"
+                variant="primary"
                 type="button"
                 onClick={checkoutHandler}
-                className="primary block"
                 disabled={cartItems.length === 0}
               >
                 Proceed to Checkout
               </Button>
             </ListGroup.Item>
           </ListGroup>
-        </div>
-      </Row>
-    </Col>
+        </Card>
+      </Col>
+    </Row>
   );
 }

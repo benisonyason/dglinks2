@@ -59,7 +59,7 @@ function App() {
       >
         <BrowserRouter>
           <Row>
-            <Navbar bg="light"  expand="lg" collapseOnSelect fluid fixed="top">
+            <Navbar bg="light"  expand={false} collapseOnSelect fluid sticky="top">
               <Container className="Navigator">
                 <Navbar.Brand href="/">
                   {" "}

@@ -1,12 +1,13 @@
 import React from 'react';
+import { Breadcrumb } from 'react-bootstrap';
 
 export default function CheckoutSteps(props) {
   return (
-    <div className="row checkout-steps">
-      <div className={props.step1 ? 'active' : ''}>Sign-In</div>
-      <div className={props.step2 ? 'active' : ''}>KYC Details</div>
-      <div className={props.step3 ? 'active' : ''}>Payment</div>
-      <div className={props.step4 ? 'active' : ''}>Place Order</div>
-    </div>
+    <Breadcrumb>
+      <Breadcrumb.Item className={props.step1 ? 'active' : ''}>Sign-In</Breadcrumb.Item>
+      <Breadcrumb.Item className={props.step2 ? 'active' : ''}>KYC Details</Breadcrumb.Item>
+      <Breadcrumb.Item className={props.step3 ? 'active' : ''}>Payment</Breadcrumb.Item>
+      <Breadcrumb.Item className={props.step4 ? 'active' : ''}>Place Order</Breadcrumb.Item>
+    </Breadcrumb>
   );
 }

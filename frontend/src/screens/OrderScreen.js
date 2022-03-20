@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { PayPalButton } from 'react-paypal-button-v2';
+import { PaystackButton } from 'react-paystack';
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ import {
   ORDER_DELIVER_RESET,
   ORDER_PAY_RESET,
 } from '../constants/orderConstants';
+import { Row, Col, Button, ListGroup } from 'react-bootstrap'
 
 export default function OrderScreen(props) {
   const params = useParams();
@@ -79,14 +80,14 @@ export default function OrderScreen(props) {
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
-    <div>
-      <h1>Order {order._id}</h1>
-      <div className="row top">
-        <div className="col-2">
-          <ul>
-            <li>
+    <Row>
+      <h5>Order {order._id}</h5>
+      <Row >
+        <Col sm={6}>
+          <ListGroup>
+            <ListGroup>
               <div className="card card-body">
-                <h2>Shippring</h2>
+                <h3>Address</h3>
                 <p>
                   <strong>Name:</strong> {order.shippingAddress.fullName} <br />
                   <strong>Address: </strong> {order.shippingAddress.address},
@@ -102,7 +103,7 @@ export default function OrderScreen(props) {
                   <MessageBox variant="danger">Not Delivered</MessageBox>
                 )}
               </div>
-            </li>
+            </ListGroup>
             <li>
               <div className="card card-body">
                 <h2>Payment</h2>
@@ -147,80 +148,80 @@ export default function OrderScreen(props) {
                 </ul>
               </div>
             </li>
-          </ul>
-        </div>
-        <div className="col-1">
-          <div className="card card-body">
-            <ul>
-              <li>
-                <h2>Order Summary</h2>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Items</div>
-                  <div>N{order.itemsPrice.toFixed(2)}</div>
+          </ListGroup>
+          <ListGroup>
+            <li>
+              <h2>Order Summary</h2>
+            </li>
+            <ListGroup.Item>
+              <div className="row">
+                <div>Items</div>
+                <div>N{order.itemsPrice.toFixed(2)}</div>
+              </div>
+            </ListGroup.Item>
+            <li>
+              <div className="row">
+                <div>Shipping</div>
+                <div>N{order.shippingPrice.toFixed(2)}</div>
+              </div>
+            </li>
+            <ListGroup>
+              <div className="row">
+                <div>Tax</div>
+                <div>N{order.taxPrice.toFixed(2)}</div>
+              </div>
+            </ListGroup>
+            <ListGroup>
+              <div className="row">
+                <div>
+                  <strong> Order Total</strong>
                 </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Shipping</div>
-                  <div>N{order.shippingPrice.toFixed(2)}</div>
+                <div>
+                  <strong>N{order.totalPrice.toFixed(2)}</strong>
                 </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Tax</div>
-                  <div>N{order.taxPrice.toFixed(2)}</div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>
-                    <strong> Order Total</strong>
-                  </div>
-                  <div>
-                    <strong>N{order.totalPrice.toFixed(2)}</strong>
-                  </div>
-                </div>
-              </li>
-              {!order.isPaid && (
-                <li>
-                  {!sdkReady ? (
-                    <LoadingBox></LoadingBox>
-                  ) : (
-                    <>
-                      {errorPay && (
-                        <MessageBox variant="danger">{errorPay}</MessageBox>
-                      )}
-                      {loadingPay && <LoadingBox></LoadingBox>}
+              </div>
+            </ListGroup>
+            {!order.isPaid && (
+              <ListGroup>
+                {!sdkReady ? (
+                  <LoadingBox></LoadingBox>
+                ) : (
+                  <>
+                    {errorPay && (
+                      <MessageBox variant="danger">{errorPay}</MessageBox>
+                    )}
+                    {loadingPay && <LoadingBox></LoadingBox>}
 
-                      <PayPalButton
-                        amount={order.totalPrice}
-                        onSuccess={successPaymentHandler}
-                      ></PayPalButton>
-                    </>
-                  )}
-                </li>
-              )}
-              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-                <li>
-                  {loadingDeliver && <LoadingBox></LoadingBox>}
-                  {errorDeliver && (
-                    <MessageBox variant="danger">{errorDeliver}</MessageBox>
-                  )}
-                  <button
-                    type="button"
-                    className="primary block"
-                    onClick={deliverHandler}
-                  >
-                    Deliver Order
-                  </button>
-                </li>
-              )}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+                    <PaystackButton
+                      publicKey='pk_live_c2933c52cbe3a4255fcfa0389a70b88482452eb4'
+                      email="user@example.com"
+                      text='PayNow'
+                      amount={order.totalPrice * 100}
+                      onSuccess={successPaymentHandler}
+                    />
+                  </>
+                )}
+              </ListGroup>
+            )}
+            {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+              <ListGroup>
+                {loadingDeliver && <LoadingBox></LoadingBox>}
+                {errorDeliver && (
+                  <MessageBox variant="danger">{errorDeliver}</MessageBox>
+                )}
+                <Button
+                  type="button"
+                  className="primary block"
+                  onClick={deliverHandler}
+                >
+                  Deliver Order
+                </Button>
+              </ListGroup>
+            )}
+          </ListGroup>
+        </Col>
+
+      </Row>
+    </Row>
   );
 }

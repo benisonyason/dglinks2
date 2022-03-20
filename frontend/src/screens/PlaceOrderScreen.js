@@ -6,6 +6,7 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { ORDER_CREATE_RESET } from '../constants/orderConstants';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { Row, Col, Button, ListGroup, Card, Stack } from 'react-bootstrap';
 
 export default function PlaceOrderScreen(props) {
   const navigate = useNavigate();
@@ -19,8 +20,8 @@ export default function PlaceOrderScreen(props) {
   cart.itemsPrice = toPrice(
     cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
   );
-  cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
-  cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
+  cart.shippingPrice = cart.itemsPrice > 100000 ? toPrice(0) : toPrice(0);
+  cart.taxPrice = toPrice(0.075 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
   const dispatch = useDispatch();
   const placeOrderHandler = () => {
@@ -35,109 +36,82 @@ export default function PlaceOrderScreen(props) {
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
-      <div className="row top">
-        <div className="col-2">
-          <ul>
-            <li>
-              <div className="card card-body">
-                <h2>Shipping</h2>
-                <p>
-                  <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
-                  <strong>Address: </strong> {cart.shippingAddress.address},
-                  {cart.shippingAddress.city}, {cart.shippingAddress.postalCode}
-                  ,{cart.shippingAddress.country}
-                </p>
-              </div>
-            </li>
-            <li>
-              <div className="card card-body">
-                <h2>Payment</h2>
-                <p>
-                  <strong>Method:</strong> {cart.paymentMethod}
-                </p>
-              </div>
-            </li>
-            <li>
-              <div className="card card-body">
-                <h2>Order Items</h2>
-                <ul>
+      <Row>
+          <Col sm="6">
+            <ListGroup>
+              <Stack gap={2}>
+                <Card>
+                  <h2>Shipping</h2>
+                  <p>
+                    <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
+                    <strong>Address: </strong> {cart.shippingAddress.address},
+                    {cart.shippingAddress.city}, {cart.shippingAddress.postalCode}
+                    ,{cart.shippingAddress.country}
+                  </p>
+                </Card>
+                <Card >
+                  <h2>Payment</h2>
+                  <p>
+                    <strong>Method:</strong> {cart.paymentMethod}
+                  </p>
+                </Card>
+                <Card>
+                  <h4>Order Items</h4>
                   {cart.cartItems.map((item) => (
-                    <li key={item.product}>
-                      <div className="row">
-                        <div>
+                    <Card key={item.product}>
+                      <Row >
+                        <Col>
                           <img
+                            style={{ maxWidth: '50px' }}
                             src={item.image}
                             alt={item.name}
                             className="small"
                           ></img>
-                        </div>
-                        <div className="min-30">
+                        </Col>
+                        <Col>
                           <Link to={`/product/${item.product}`}>
                             {item.name}
                           </Link>
-                        </div>
+                        </Col>
 
-                        <div>
+                        <Col>
                           {item.qty} x N{item.price} = N{item.qty * item.price}
-                        </div>
-                      </div>
-                    </li>
+                        </Col>
+                      </Row>
+                    </Card>
                   ))}
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div className="col-1">
-          <div className="card card-body">
-            <ul>
-              <li>
-                <h2>Order Summary</h2>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Items</div>
-                  <div>N{cart.itemsPrice.toFixed(2)}</div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Shipping</div>
-                  <div>N{cart.shippingPrice.toFixed(2)}</div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>Tax</div>
-                  <div>N{cart.taxPrice.toFixed(2)}</div>
-                </div>
-              </li>
-              <li>
-                <div className="row">
-                  <div>
-                    <strong> Order Total</strong>
-                  </div>
-                  <div>
-                    <strong>N{cart.totalPrice.toFixed(2)}</strong>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={placeOrderHandler}
-                  className="primary block"
-                  disabled={cart.cartItems.length === 0}
-                >
-                  Place Order
-                </button>
-              </li>
-              {loading && <LoadingBox></LoadingBox>}
-              {error && <MessageBox variant="danger">{error}</MessageBox>}
-            </ul>
-          </div>
-        </div>
-      </div>
+                </Card>
+              </Stack>
+            </ListGroup>
+          </Col>
+          <Col sm={5}>
+            <Card>
+              <ListGroup>
+                  <h2>Order Summary</h2>
+                  <Row >
+                    <h5>Items Price</h5>
+                    <div>N{cart.itemsPrice.toFixed(2)}</div>
+                    <h5>VAT</h5>
+                    <div>N{cart.taxPrice.toFixed(2)}</div>
+                  </Row>
+                  <Row >
+                      <strong> Order Total</strong>
+                      <strong>= N{cart.totalPrice.toFixed(2)}</strong>
+                  </Row>
+                  <Button
+                  variant='primary'
+                    type="button"
+                    onClick={placeOrderHandler}
+                    disabled={cart.cartItems.length === 0}
+                  >
+                    Place Order
+                  </Button>
+                {loading && <LoadingBox></LoadingBox>}
+                {error && <MessageBox variant="danger">{error}</MessageBox>}
+              </ListGroup>
+            </Card>
+          </Col>
+      </Row>
     </div>
   );
 }

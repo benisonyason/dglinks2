@@ -5,7 +5,7 @@ import { listProducts } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Product from '../components/Product';
-import { Form, Col, Row, Button, Container, ListGroup} from 'react-bootstrap';
+import { Form, Col, Row, Container, ListGroup} from 'react-bootstrap';
 
 export default function SearchScreen(props) {
   const navigate = useNavigate();
