@@ -6,16 +6,17 @@ import { Stack, CardGroup, Card } from "react-bootstrap";
 export default function Product(props) {
   const { product } = props;
   return (
-    <Stack gap={2} className="col-md-5 mx-auto">
+    <Stack gap={5} className="col-md-5 mx-auto">
       <CardGroup >
-        <Card key={product._id}>
+        <Card key={product._id} style={{ alignItems: 'center', maxWidth: 'auto', display: 'flex'}}>
           <Link to={`/product/${product._id}`}>
-            <Card.Img  src={product.image} alt={product.name} />
+            <Card.Img  src={product.image} alt={product.name} style={{ maxHeight: 'auto', auto: '100px' }}/>
           </Link>
           <Card.Footer>
             <Card.Title>
             <Link to={`/product/${product._id}`}>
-              <h2>{product.name}</h2>
+              <h4>{product.name}</h4><br/>
+              <h6>{product.category}</h6>
             </Link>
             </Card.Title>
             <Rating

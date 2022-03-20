@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Form, Container, Button, Row } from 'react-bootstrap';
 
 export default function SearchBox() {
   const navigate = useNavigate();
@@ -9,19 +10,22 @@ export default function SearchBox() {
     navigate(`/search/name/${name}`);
   };
   return (
-    <form className="search" onSubmit={submitHandler}>
-      <div className="row">
-        <input
-          type="text"
-          name="q"
-          id="q"
-          placeholder ="Search Products"
-          onChange={(e) => setName(e.target.value)}
-        ></input>
-        <button className="primary" type="submit">
-          <i className="fa fa-search"></i>
-        </button>
-      </div>
-    </form>
+    <Row className="mb-3">
+      <Form onSubmit={submitHandler}>
+        <Container >
+          <Form.Control
+            type="text"
+            name="q"
+            id="q"
+            placeholder="Search Products"
+            onChange={(e) => setName(e.target.value)}
+          ></Form.Control>
+          <Button className="primary" type="submit">
+            <i className="fa fa-search"></i>
+          </Button>
+        </Container>
+      </Form>
+    </Row>
+
   );
 }

@@ -7,6 +7,7 @@ import MessageBox from '../components/MessageBox';
 import Product from '../components/Product';
 import Rating from '../components/Rating';
 import { prices, ratings } from '../utils';
+import { Form, Col, Row, Button, Container} from 'react-bootstrap';
 
 export default function SearchScreen(props) {
   const navigate = useNavigate();
@@ -54,8 +55,8 @@ export default function SearchScreen(props) {
     return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
   };
   return (
-    <div>
-      <div className="row">
+    <Container fluid>
+      <Row>
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
@@ -63,9 +64,9 @@ export default function SearchScreen(props) {
         ) : (
           <div>{products.length} Results</div>
         )}
-        <div>
+        <Container>
           Sort by{' '}
-          <select
+          <Form.Select
             value={order}
             onChange={(e) => {
               navigate(getFilterUrl({ order: e.target.value }));
@@ -75,13 +76,13 @@ export default function SearchScreen(props) {
             <option value="lowest">Price: Low to High</option>
             <option value="highest">Price: High to Low</option>
             <option value="toprated">Avg. Customer Reviews</option>
-          </select>
-        </div>
-      </div>
-      <div className="row top">
-        <div className="col-1">
+          </Form.Select>
+        </Container>
+      </Row>
+      <Row className="row top">
+        <Col className="col-1">
           <h3>Department</h3>
-          <div>
+          <Row>
             {loadingCategories ? (
               <LoadingBox></LoadingBox>
             ) : errorCategories ? (
@@ -108,8 +109,8 @@ export default function SearchScreen(props) {
                 ))}
               </ul>
             )}
-          </div>
-          <div>
+          </Row>
+          <Row>
             <h3>Price</h3>
             <ul>
               {prices.map((p) => (
@@ -125,8 +126,8 @@ export default function SearchScreen(props) {
                 </li>
               ))}
             </ul>
-          </div>
-          <div>
+          </Row>
+          <Row>
             <h3>Avg. Customer Review</h3>
             <ul>
               {ratings.map((r) => (
@@ -140,8 +141,8 @@ export default function SearchScreen(props) {
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
+          </Row>
+        </Col>
         <div className="col-3">
           {loading ? (
             <LoadingBox></LoadingBox>
@@ -171,7 +172,7 @@ export default function SearchScreen(props) {
             </>
           )}
         </div>
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 }

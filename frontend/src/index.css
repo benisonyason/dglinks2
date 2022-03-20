@@ -4,11 +4,17 @@ body{
 }
 
 .Navigator{
-  background-color: rgb(212, 203, 219);
+  background-color: rgba(214, 193, 230, 0.726);
 }
 
 .carousel-caption{
   text-shadow: 2px 2px 5px white;  color: red;
   font-size: large;
   font-weight: 200;
+}
+
+.small{
+  width: fit-content;
+  align-items: center;
+  align-content: center;
 }

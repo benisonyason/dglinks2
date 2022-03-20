@@ -53,9 +53,9 @@ export default function HomeScreen() {
               <MessageBox variant="danger">{error}</MessageBox>
             ) : (
               <>
-                <div>
-                  <SearchBox />
-                </div>
+                <Container>
+                  <SearchBox/>
+                </Container>
 
                 {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
                 <div className="row center">
