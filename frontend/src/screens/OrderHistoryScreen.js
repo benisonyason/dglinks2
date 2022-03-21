@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { listOrderMine } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import {Table } from 'react-bootstrap';
 
 export default function OrderHistoryScreen(props) {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export default function OrderHistoryScreen(props) {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <table className="table">
+        <Table responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -58,7 +59,7 @@ export default function OrderHistoryScreen(props) {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
     </div>
   );

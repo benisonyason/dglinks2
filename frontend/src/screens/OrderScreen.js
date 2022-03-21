@@ -181,9 +181,10 @@ export default function OrderScreen(props) {
                       {loadingPay && <LoadingBox></LoadingBox>}
 
                       <PaystackButton
+                        name={userInfo.name}
                         publicKey='pk_live_c2933c52cbe3a4255fcfa0389a70b88482452eb4'
-                        email="user@example.com"
-                        text='PayNow'
+                        email={userInfo.email}
+                        text='Pay Now'
                         amount={order.totalPrice * 100}
                         onSuccess={successPaymentHandler}
                       />
