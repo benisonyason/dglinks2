@@ -43,7 +43,7 @@ export default function CartScreen(props) {
       ) : (
         <Col sm={8}>
           {cartItems.map((item) => (
-            <Col key={item.product}>
+            <Col sm={6} key={item.product}>
               <Card >
                 <Row>
                   <Col>

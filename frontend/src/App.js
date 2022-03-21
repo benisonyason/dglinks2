@@ -34,7 +34,6 @@ import {
   Nav,
   NavDropdown,
   Navbar,
-  Container,
   ThemeProvider,
   Row,
   Badge,
@@ -53,83 +52,80 @@ function App() {
     dispatch(listProductCategories());
   }, [dispatch]);
   return (
-    <Container fluid>
       <ThemeProvider
         breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]}
       >
         <BrowserRouter>
           <Row>
-            <Navbar bg="light"  expand={false} collapseOnSelect fluid sticky="top">
-              <Container className="Navigator">
-                <Navbar.Brand href="/">
-                  {" "}
-                    DGLINKS 
-                </Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                  <Nav className="me-auto">
-                    <Nav.Link href="/">
-                      {" "}
-                      Home
-                    </Nav.Link>
-                    <Nav.Link href="/aboutus">
-                      {" "}
-                      About Us
-                    </Nav.Link>
-                    <Nav.Link href="/cart">
-                      {" "}
-                      Cart
-                      {cartItems.length > 0 && (
-                        <Badge bg="danger">{cartItems.length}</Badge>
-                      )}
-                    </Nav.Link>
-                    {userInfo ? (
-                      <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                        <NavDropdown.Item href="/profile">
-                          User Profile
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="/orderhistory">
-                          Order History
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="#signout" onClick={signoutHandler}>
-                          Log Out
-                        </NavDropdown.Item>
-                      </NavDropdown>
-                    ) : (
-                      <Nav.Link href="/signin">
-                        Log In
-                      </Nav.Link>
+            <Navbar bg="light" expand='lg' collapseOnSelect sticky="botom">
+              <Navbar.Brand href="/">
+                {" "}
+                DGLINKS Geospatial
+              </Navbar.Brand>
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto">
+                  <Nav.Link href="/">
+                    {" "}
+                    Home
+                  </Nav.Link>
+                  <Nav.Link href="/aboutus">
+                    {" "}
+                    About Us
+                  </Nav.Link>
+                  <Nav.Link href="/cart">
+                    {" "}
+                    Cart
+                    {cartItems.length > 0 && (
+                      <Badge bg="danger">{cartItems.length}</Badge>
                     )}
-                    {userInfo && userInfo.isSeller && (
-                      <NavDropdown title="Administrator" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="/productlist/seller">
-                          Products
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="/orderlist/seller">
-                          Orders
-                        </NavDropdown.Item>
-                      </NavDropdown>
-                    )}
-                    {userInfo && userInfo.isAdmin && (
-                      <NavDropdown title="Admin" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="/dashboard">
-                          Dashboard
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="/productlist">
-                          Products
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="/orderlist">
-                          {" "}
-                          Orders
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="/userlist">
-                          Users
-                        </NavDropdown.Item>
-                      </NavDropdown>
-                    )}
-                  </Nav>
-                </Navbar.Collapse>
-              </Container>
+                  </Nav.Link>
+                  {userInfo ? (
+                    <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                      <NavDropdown.Item href="/profile">
+                        User Profile
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="/orderhistory">
+                        Order History
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="#signout" onClick={signoutHandler}>
+                        Log Out
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  ) : (
+                    <Nav.Link href="/signin">
+                      Log In
+                    </Nav.Link>
+                  )}
+                  {userInfo && userInfo.isSeller && (
+                    <NavDropdown title="Administrator" id="basic-nav-dropdown">
+                      <NavDropdown.Item href="/productlist/seller">
+                        Products
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="/orderlist/seller">
+                        Orders
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  )}
+                  {userInfo && userInfo.isAdmin && (
+                    <NavDropdown title="Admin" id="basic-nav-dropdown">
+                      <NavDropdown.Item href="/dashboard">
+                        Dashboard
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="/productlist">
+                        Products
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="/orderlist">
+                        {" "}
+                        Orders
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="/userlist">
+                        Users
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  )}
+                </Nav>
+              </Navbar.Collapse>
             </Navbar>
           </Row>
           <Row>
@@ -275,26 +271,25 @@ function App() {
             </Routes>
           </Row>
           <footer>
-          <Row className="row center">
-            {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-            <div>All right reserved dglinks 2021<br />
-              <div className='row center'>
-                <Link to="/">
-                  <i className="fa fa-facebook" />
-                </Link>
-                <Link to="/">
-                  <i className="fa fa-twitter" />
-                </Link>
-                <Link to="/">
-                  <i className="fa fa-google" />
-                </Link>
-              </div></div>
-            {' '}
-          </Row>
+            <Row className="row center">
+              {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
+              <div>All right reserved dglinks 2021<br />
+                <div className='row center'>
+                  <Link to="/">
+                    <i className="fa fa-facebook" />
+                  </Link>
+                  <Link to="/">
+                    <i className="fa fa-twitter" />
+                  </Link>
+                  <Link to="/">
+                    <i className="fa fa-google" />
+                  </Link>
+                </div></div>
+              {' '}
+            </Row>
           </footer>
         </BrowserRouter>
       </ThemeProvider>
-    </Container>
 
   );
 }

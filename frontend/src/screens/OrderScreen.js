@@ -80,31 +80,31 @@ export default function OrderScreen(props) {
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
-    <Row>
+    <div className='content'>
       <h5>Order {order._id}</h5>
       <Row >
-        <Col sm={6}>
-          <ListGroup>
-            <ListGroup>
-              <div className="card card-body">
-                <h3>Address</h3>
-                <p>
-                  <strong>Name:</strong> {order.shippingAddress.fullName} <br />
-                  <strong>Address: </strong> {order.shippingAddress.address},
-                  {order.shippingAddress.city},{' '}
-                  {order.shippingAddress.postalCode},
-                  {order.shippingAddress.country}
-                </p>
-                {order.isDelivered ? (
-                  <MessageBox variant="success">
-                    Delivered at {order.deliveredAt}
-                  </MessageBox>
-                ) : (
-                  <MessageBox variant="danger">Not Delivered</MessageBox>
-                )}
-              </div>
-            </ListGroup>
-            <li>
+        <Col>
+          <Row>
+            <Col sm={8}>
+              <ListGroup>
+                <div className="card card-body">
+                  <h3>Address</h3>
+                  <p>
+                    <strong>Name:</strong> {order.shippingAddress.fullName} <br />
+                    <strong>Address: </strong> {order.shippingAddress.address},
+                    {order.shippingAddress.city},{' '}
+                    {order.shippingAddress.postalCode},
+                    {order.shippingAddress.country}
+                  </p>
+                  {order.isDelivered ? (
+                    <MessageBox variant="success">
+                      Delivered at {order.deliveredAt}
+                    </MessageBox>
+                  ) : (
+                    <MessageBox variant="danger">Not Delivered</MessageBox>
+                  )}
+                </div>
+              </ListGroup>
               <div className="card card-body">
                 <h2>Payment</h2>
                 <p>
@@ -118,110 +118,100 @@ export default function OrderScreen(props) {
                   <MessageBox variant="danger">Not Paid</MessageBox>
                 )}
               </div>
-            </li>
-            <li>
-              <div className="card card-body">
+              <div className='card card-body'>
                 <h2>Order Items</h2>
-                <ul>
-                  {order.orderItems.map((item) => (
-                    <li key={item.product}>
-                      <div className="row">
-                        <div>
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="small"
-                          ></img>
-                        </div>
-                        <div className="min-30">
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
-                        </div>
+                {order.orderItems.map((item) => (
+                  <div key={item.product}>
+                    <Row>
+                      <Col sm={2}>
+                        <img
+                          style={{ maxWidth: '50px' }}
+                          src={item.image}
+                          alt={item.name}
+                          className="small"
+                        ></img>
+                      </Col>
+                      <Col sm={4}>
+                        <Link to={`/product/${item.product}`}>
+                          {item.name}
+                        </Link>
+                      </Col>
 
-                        <div>
-                          {item.qty} x N{item.price} = N{item.qty * item.price}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                      <Col sm={4}>
+                        {item.qty} x N{item.price} = N{item.qty * item.price}
+                      </Col>
+                    </Row>
+                  </div>
+                ))}
               </div>
-            </li>
-          </ListGroup>
-          <ListGroup>
-            <li>
+            </Col>
+            <Col sm={4}>
               <h2>Order Summary</h2>
-            </li>
-            <ListGroup.Item>
-              <div className="row">
-                <div>Items</div>
-                <div>N{order.itemsPrice.toFixed(2)}</div>
-              </div>
-            </ListGroup.Item>
-            <li>
-              <div className="row">
-                <div>Shipping</div>
-                <div>N{order.shippingPrice.toFixed(2)}</div>
-              </div>
-            </li>
-            <ListGroup>
-              <div className="row">
-                <div>Tax</div>
-                <div>N{order.taxPrice.toFixed(2)}</div>
-              </div>
-            </ListGroup>
-            <ListGroup>
-              <div className="row">
+              <ListGroup.Item>
                 <div>
-                  <strong> Order Total</strong>
+                  <div>Items</div>
+                  <div>N{order.itemsPrice.toFixed(2)}</div>
                 </div>
-                <div>
-                  <strong>N{order.totalPrice.toFixed(2)}</strong>
-                </div>
-              </div>
-            </ListGroup>
-            {!order.isPaid && (
+              </ListGroup.Item>
               <ListGroup>
-                {!sdkReady ? (
-                  <LoadingBox></LoadingBox>
-                ) : (
-                  <>
-                    {errorPay && (
-                      <MessageBox variant="danger">{errorPay}</MessageBox>
-                    )}
-                    {loadingPay && <LoadingBox></LoadingBox>}
+                <div className="row">
+                  <strong>Tax</strong>
+                  <div>N{order.taxPrice.toFixed(2)}</div>
+                </div>
+              </ListGroup>
+              <ListGroup>
+                <div className="row">
+                  <div>
+                    <strong> Total Price</strong>
+                  </div>
+                  <div>
+                    <strong>N{order.totalPrice.toFixed(2)}</strong>
+                  </div>
+                </div>
+              </ListGroup>
+              {!order.isPaid && (
+                <ListGroup>
+                  {!sdkReady ? (
+                    <LoadingBox></LoadingBox>
+                  ) : (
+                    <>
+                      {errorPay && (
+                        <MessageBox variant="danger">{errorPay}</MessageBox>
+                      )}
+                      {loadingPay && <LoadingBox></LoadingBox>}
 
-                    <PaystackButton
-                      publicKey='pk_live_c2933c52cbe3a4255fcfa0389a70b88482452eb4'
-                      email="user@example.com"
-                      text='PayNow'
-                      amount={order.totalPrice * 100}
-                      onSuccess={successPaymentHandler}
-                    />
-                  </>
-                )}
-              </ListGroup>
-            )}
-            {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-              <ListGroup>
-                {loadingDeliver && <LoadingBox></LoadingBox>}
-                {errorDeliver && (
-                  <MessageBox variant="danger">{errorDeliver}</MessageBox>
-                )}
-                <Button
-                  type="button"
-                  className="primary block"
-                  onClick={deliverHandler}
-                >
-                  Deliver Order
-                </Button>
-              </ListGroup>
-            )}
-          </ListGroup>
+                      <PaystackButton
+                        publicKey='pk_live_c2933c52cbe3a4255fcfa0389a70b88482452eb4'
+                        email="user@example.com"
+                        text='PayNow'
+                        amount={order.totalPrice * 100}
+                        onSuccess={successPaymentHandler}
+                      />
+                    </>
+                  )}
+                </ListGroup>
+              )}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <ListGroup>
+                  {loadingDeliver && <LoadingBox></LoadingBox>}
+                  {errorDeliver && (
+                    <MessageBox variant="danger">{errorDeliver}</MessageBox>
+                  )}
+                  <Button
+                    type="button"
+                    className="primary block"
+                    onClick={deliverHandler}
+                  >
+                    Deliver Order
+                  </Button>
+                </ListGroup>
+              )}
+            </Col>
+
+          </Row>
         </Col>
 
       </Row>
-    </Row>
+    </div>
   );
 }

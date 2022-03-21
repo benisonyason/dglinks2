@@ -28,44 +28,44 @@ export default function HomeScreen() {
             <img className="d-block w-100" src="images/geo.jpg" alt="Geospatial" />
             <Carousel.Caption>
               <h3>GEOSPATIAL</h3>
-              </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                  <img className="d-block w-100" src="images/ict.jpg" alt="ICT" />
-                  <Carousel.Caption>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img className="d-block w-100" src="images/ict.jpg" alt="ICT" />
+            <Carousel.Caption>
               <h3>ICT</h3>
-              </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                  <img className="d-block w-100" src="images/eng.jpg" alt="Engineering" />
-                  <Carousel.Caption>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img className="d-block w-100" src="images/eng.jpg" alt="Engineering" />
+            <Carousel.Caption>
               <h3>Engineering</h3>
-              </Carousel.Caption>
-              </Carousel.Item>
-            </Carousel>
-          </Container>
-          <Container>
-            <hr class="green" />
-            <h2>Data Plans</h2>
-            {loading ? (
-              <LoadingBox></LoadingBox>
-            ) : error ? (
-              <MessageBox variant="danger">{error}</MessageBox>
-            ) : (
-              <>
-                <Container>
-                  <SearchBox/>
-                </Container>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+      </Container>
+      <Container>
+        <hr class="green" />
+        <h2>Data Plans</h2>
+        {loading ? (
+          <LoadingBox></LoadingBox>
+        ) : error ? (
+          <MessageBox variant="danger">{error}</MessageBox>
+        ) : (
+          <>
+            <Container>
+              <SearchBox />
+            </Container>
 
-                {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
-                <div className="row center">
-                  {products.map((product) => (
-                    <Product key={product._id} product={product}></Product>
-                  ))}
-                </div>
-              </>
-            )}
-          </Container>
-        </div>
-        );
+            {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
+            <div className="row center">
+              {products.map((product) => (
+                <Product key={product._id} product={product}></Product>
+              ))}
+            </div>
+          </>
+        )}
+      </Container>
+    </div>
+  );
 }

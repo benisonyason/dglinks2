@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShippingAddress } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
-import { Form, Col, Row, Container, Button, Stack } from 'react-bootstrap';
+import { Form, Col, Row, Button, Stack } from 'react-bootstrap';
 
 
 export default function ShippingAddressScreen(props) {
@@ -68,14 +68,15 @@ export default function ShippingAddressScreen(props) {
     navigate('/map');
   };
   return (
-    <Container>
+    <div className='content'>
       <CheckoutSteps step1 step2></CheckoutSteps>
       <Form onSubmit={submitHandler}>
-        <Col sm={3}>
+        <Row>
           <Row>
             <h3>Cutomer Details</h3>
           </Row>
-          <Row>
+          <Col sm={2}>
+
             <Form.Label htmlFor="fullName">Full Name</Form.Label>
             <Form.Control
               type="text"
@@ -85,8 +86,8 @@ export default function ShippingAddressScreen(props) {
               onChange={(e) => setFullName(e.target.value)}
               required
             ></Form.Control>
-          </Row>
-          <Row>
+          </Col>
+          <Col sm={2}>
             <Form.Label htmlFor="address">Address</Form.Label>
             <Form.Control
               type="text"
@@ -96,8 +97,8 @@ export default function ShippingAddressScreen(props) {
               onChange={(e) => setAddress(e.target.value)}
               required
             ></Form.Control>
-          </Row>
-          <Row>
+          </Col>
+          <Col sm={2}>
             <Form.Label htmlFor="city">City</Form.Label>
             <Form.Control
               type="text"
@@ -107,8 +108,8 @@ export default function ShippingAddressScreen(props) {
               onChange={(e) => setCity(e.target.value)}
               required
             ></Form.Control>
-          </Row>
-          <Row>
+          </Col>
+          <Col sm={2}>
             <Form.Label htmlFor="postalCode">Postal Code</Form.Label>
             <Form.Control
               type="text"
@@ -118,8 +119,8 @@ export default function ShippingAddressScreen(props) {
               onChange={(e) => setPostalCode(e.target.value)}
               required
             ></Form.Control>
-          </Row>
-          <Row>
+          </Col>
+          <Col sm={2}>
             <Form.Label htmlFor="country">Country</Form.Label>
             <Form.Control
               type="text"
@@ -129,23 +130,22 @@ export default function ShippingAddressScreen(props) {
               onChange={(e) => setCountry(e.target.value)}
               required
             ></Form.Control>
-          </Row>
+          </Col>
           <Stack gap={3}>
-          <Row>
-            <Form.Label htmlFor="chooseOnMap">Location</Form.Label>
-            <Button variant="primary" type="submit" onClick={chooseOnMap} disabled>
-              Choose On Map
-            </Button>
-          </Row>
-            <Row>
+            <Col sm={2}>
+              <Form.Label htmlFor="chooseOnMap">Location</Form.Label>
+              <Button variant="primary" type="submit" onClick={chooseOnMap} disabled>
+                Choose On Map
+              </Button>
+            </Col>
+            <Col sm={2}>
               <Button variant="primary" type="submit">
                 Continue
               </Button>
-            </Row>
+            </Col>
           </Stack>
-
-        </Col>
+        </Row>
       </Form>
-    </Container>
+    </div>
   );
 }

@@ -20,45 +20,47 @@ export default function PaymentMethodScreen(props) {
     navigate('/placeorder');
   };
   return (
-    <Col sm={3}>
+    <div className='content'>
       <CheckoutSteps step1 step2 step3></CheckoutSteps>
       <Form onSubmit={submitHandler}>
-        <div>
-          <h3>Payment Method</h3>
-        </div>
         <Row>
           <div>
-            <Form.Check
-              type="radio"
-              id="paypal"
-              value="PayPal"
-              name="paymentMethod"
-              required
-              label={`Paystack`}
-              checked
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check>
+            <h3>Payment Method</h3>
           </div>
-        </Row>
-        <Row>
-          <div>
-            <Form.Check
-              type="radio"
-              id="stripe"
-              value="Stripe"
-              name="paymentMethod"
-              label={`Stripe`}
-              required
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check>
-          </div>
-        </Row>
-        <Row>
-          <Button variant="primary" type="submit">
-            Continue
-          </Button>
+          <Col sm={2}>
+            <div>
+              <Form.Check
+                type="radio"
+                id="paypal"
+                value="PayPal"
+                name="paymentMethod"
+                required
+                label={`Paystack`}
+                checked
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              ></Form.Check>
+            </div>
+          </Col>
+          <Col sm={2}>
+            <div>
+              <Form.Check
+                type="radio"
+                id="stripe"
+                value="Stripe"
+                name="paymentMethod"
+                label={`Stripe`}
+                required
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              ></Form.Check>
+            </div>
+          </Col>
+          <Col sm={2}>
+            <Button variant="primary" type="submit">
+              Continue
+            </Button>
+          </Col>
         </Row>
       </Form>
-    </Col>
+    </div>
   );
 }

@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { register } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { Form, Col, Row, Button, Container } from 'react-bootstrap';
+import { Form, Col, Row, Button } from 'react-bootstrap';
 
 export default function RegisterScreen(props) {
   const navigate = useNavigate();
@@ -35,13 +35,13 @@ export default function RegisterScreen(props) {
     }
   }, [navigate, redirect, userInfo]);
   return (
-    <Container>
+    <div className='content'>
       <Form onSubmit={submitHandler}>
-        <Col>
+        <Row>
           <div>
             <h1>Create Account</h1>
           </div>
-          <Col>
+          <Col sm={2}>
 
             {loading && <LoadingBox></LoadingBox>}
             {error && <MessageBox variant="danger">{error}</MessageBox>}
@@ -56,7 +56,7 @@ export default function RegisterScreen(props) {
               ></Form.Control>
             </div>
           </Col>
-          <Col>
+          <Col sm={2}>
             <Form.Group>
               <Form.Label htmlFor="email">Email address</Form.Label>
               <Form.Control
@@ -68,11 +68,10 @@ export default function RegisterScreen(props) {
               ></Form.Control>
             </Form.Group>
           </Col>
-          <Col>
+          <Col sm={2}>
             <Form.Group>
               <Form.Label htmlFor="password">Password</Form.Label>
               <Form.Control
-                isValid="true"
                 type="password"
                 id="password"
                 placeholder="Enter password"
@@ -81,11 +80,10 @@ export default function RegisterScreen(props) {
               ></Form.Control>
             </Form.Group>
           </Col>
-          <Col>
+          <Col sm={2}>
             <Form.Group>
               <Form.Label htmlFor="confirmPassword">Confirm Password</Form.Label>
               <Form.Control
-                isValid="true"
                 type="password"
                 id="confirmPassword"
                 placeholder="Enter confirm password"
@@ -94,7 +92,7 @@ export default function RegisterScreen(props) {
               ></Form.Control>
             </Form.Group>
           </Col>
-          <Row>
+          <Col sm={2}>
             <div>
               <Button variant="primary" type="submit">
                 Register
@@ -106,9 +104,9 @@ export default function RegisterScreen(props) {
                 <Link to={`/signin?redirect=${redirect}`}>Log-In</Link>
               </div>
             </div>
-          </Row>
-        </Col>
+          </Col>
+        </Row>
       </Form>
-    </Container>
+    </div>
   );
 }

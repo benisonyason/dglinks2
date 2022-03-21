@@ -36,7 +36,7 @@ export default function PlaceOrderScreen(props) {
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
-      <Row>
+      <div className='content'>
           <Col sm="6">
             <ListGroup>
               <Stack gap={2}>
@@ -111,7 +111,7 @@ export default function PlaceOrderScreen(props) {
               </ListGroup>
             </Card>
           </Col>
-      </Row>
+      </div>
     </div>
   );
 }

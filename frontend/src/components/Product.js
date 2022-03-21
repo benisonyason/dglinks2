@@ -6,7 +6,7 @@ import { Stack, CardGroup, Card } from "react-bootstrap";
 export default function Product(props) {
   const { product } = props;
   return (
-    <Stack gap={5} className="col-md-5 mx-auto">
+    <Stack gap={5} className="col-sm-3 mx-auto">
       <CardGroup >
         <Card key={product._id} style={{ alignItems: 'center', maxWidth: 'auto', display: 'flex'}}>
           <Link to={`/product/${product._id}`}>
