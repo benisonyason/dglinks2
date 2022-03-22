@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { listOrderMine } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import {Table } from 'react-bootstrap';
+import {Table, Button } from 'react-bootstrap';
 
 export default function OrderHistoryScreen(props) {
   const navigate = useNavigate();
@@ -15,14 +15,14 @@ export default function OrderHistoryScreen(props) {
     dispatch(listOrderMine());
   }, [dispatch]);
   return (
-    <div>
+    <div className='content'>
       <h1>Order History</h1>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <Table responsive>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -46,7 +46,7 @@ export default function OrderHistoryScreen(props) {
                     : 'No'}
                 </td>
                 <td>
-                  <button
+                  <Button
                     type="button"
                     className="small"
                     onClick={() => {
@@ -54,7 +54,7 @@ export default function OrderHistoryScreen(props) {
                     }}
                   >
                     Details
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}

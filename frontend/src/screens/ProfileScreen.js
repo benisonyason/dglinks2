@@ -4,6 +4,7 @@ import { detailsUser, updateUserProfile } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
+import { Col, Row, Form, Button } from 'react-bootstrap';
 
 export default function ProfileScreen() {
   const [name, setName] = useState('');
@@ -59,10 +60,11 @@ export default function ProfileScreen() {
     }
   };
   return (
-    <div>
-      <form className="form" onSubmit={submitHandler}>
+    <div className='content'>
+      <Form onSubmit={submitHandler}>
+        <Row>
         <div>
-          <h1>User Profile</h1>
+          <h2>User Profile</h2>
         </div>
         {loading ? (
           <LoadingBox></LoadingBox>
@@ -79,88 +81,90 @@ export default function ProfileScreen() {
                 Profile Updated Successfully
               </MessageBox>
             )}
-            <div>
-              <label htmlFor="name">Name</label>
-              <input
+            <Col sm={2}>
+              <Form.Label htmlFor="name">Name</Form.Label>
+              <Form.Control
                 id="name"
                 type="text"
                 placeholder="Enter name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-              ></input>
-            </div>
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
+              ></Form.Control>
+            </Col>
+            <Col sm={2}>
+              <Form.Label htmlFor="email">Email</Form.Label>
+              <Form.Control
                 id="email"
                 type="email"
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-              ></input>
-            </div>
-            <div>
-              <label htmlFor="password">Password</label>
-              <input
+              ></Form.Control>
+            </Col>
+            <Col sm={2}>
+              <Form.Label htmlFor="password">Password</Form.Label>
+              <Form.Control
                 id="password"
                 type="password"
                 placeholder="Enter password"
                 onChange={(e) => setPassword(e.target.value)}
-              ></input>
-            </div>
-            <div>
-              <label htmlFor="confirmPassword">confirm Password</label>
-              <input
+              ></Form.Control>
+            </Col>
+            <Col sm={2}>
+              <Form.Label htmlFor="confirmPassword">confirm Password</Form.Label>
+              <Form.Control
                 id="confirmPassword"
                 type="password"
                 placeholder="Enter confirm password"
                 onChange={(e) => setConfirmPassword(e.target.value)}
-              ></input>
-            </div>
+              ></Form.Control>
+            </Col>
             {user.isSeller && (
-              <>
-                <h2>Seller</h2>
-                <div>
-                  <label htmlFor="sellerName">Seller Name</label>
-                  <input
+              <Col sm={10}>
+                <h2>Administrator</h2>
+                <Col sm={2}>
+                  <Form.Label htmlFor="sellerName">Admin Name</Form.Label>
+                  <Form.Control
                     id="sellerName"
                     type="text"
                     placeholder="Enter Seller Name"
                     value={sellerName}
                     onChange={(e) => setSellerName(e.target.value)}
-                  ></input>
-                </div>
-                <div>
-                  <label htmlFor="sellerLogo">Seller Logo</label>
-                  <input
+                  ></Form.Control>
+                </Col>
+                <Col sm={2}>
+                  <Form.Label htmlFor="sellerLogo">Seller Logo</Form.Label>
+                  <Form.Control
                     id="sellerLogo"
                     type="text"
                     placeholder="Enter Seller Logo"
                     value={sellerLogo}
                     onChange={(e) => setSellerLogo(e.target.value)}
-                  ></input>
-                </div>
-                <div>
-                  <label htmlFor="sellerDescription">Seller Description</label>
-                  <input
+                    disabled
+                  ></Form.Control>
+                </Col>
+                <Col sm={2}>
+                  <Form.Label htmlFor="sellerDescription">Seller Description</Form.Label>
+                  <Form.Control
                     id="sellerDescription"
                     type="text"
                     placeholder="Enter Seller Description"
                     value={sellerDescription}
                     onChange={(e) => setSellerDescription(e.target.value)}
-                  ></input>
-                </div>
-              </>
+                  ></Form.Control>
+                </Col>
+              </Col>
             )}
-            <div>
+            <Col sm={2}>
               <label />
-              <button className="primary" type="submit">
+              <Button className="primary" type="submit">
                 Update
-              </button>
-            </div>
+              </Button>
+            </Col>
           </>
         )}
-      </form>
+        </Row>
+      </Form>
     </div>
   );
 }
